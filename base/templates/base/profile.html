@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block content%}
+    {% if user.is_authenticated%}
+    <div id="wrapper">
+        <div class="sidebar-brand-text">
+            {% include "sidebar.html" %}
+            </div>  
+    {% comment %} <div id="wrapper">
+    <div class="sidebar-brand-text">
+        {% include "sidebar.html" %}
+        </div>  {% endcomment %}
+    <div class="container rounded bg-white mt-5 mb-5">
+        <div class="row">
+            <div class="col-md-3 border-right">
+                <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"><span class="font-weight-bold">{{user_profile.user.first_name}}</span><span class="text-black-50">{{user_profile.user.username}}</span><span> </span></div>
+            </div>
+            <div class="col-md-5 border-right">
+                <div class="p-3 py-5">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h4 class="text-right">Profile Settings</h4>
+                    </div>
+    
+    <!-- update_profile.html -->
+    <form method="post" action="{% url 'profile' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row mt-2">
+            <div class="col-md-6"><label class="labels">First Name</label><input type="text" class="form-control" placeholder="Sharun" name="first_name" id="first_name" value="{{ user_profile.user.first_name }}">
+            </div>
+            <div class="col-md-6"><label class="labels">Last Name</label><input type="text" class="form-control"  name="last_name" id="last_name" value="{{ user_profile.user.last_name }}" placeholder="T N"></div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-12 mb-3"><label class="labels">Username</label><input type="text" class="form-control" placeholder="sharuntn" name="username" id="username" value="{{ user_profile.user.username }}"></div>
+            <div class="col-md-12 mb-3"><label class="labels">Mobile</label><input type="tel" class="form-control" placeholder="9072553014" name="mobile" id="mobile" value="{{ user_profile.mobile }}"></div>
+            <div class="col-md-12 mb-3"><label class="labels">Email</label><input type="email" class="form-control" placeholder="sharuntn5@gmail.com" name="email" id="email" value="{{ user_profile.user.email }}"></div>
+            <div class="col-md-12 mb-3"><label class="labels">DOB</label><input type="date" class="form-control" placeholder="17-05-2003" name="dob" id="dob" value="{{ user_profile.dob }}"></div>
+            <div class="col-md-12 mb-3"><label class="labels">Weight (KG)</label><input type="number" class="form-control" placeholder="82" name="weight" id="weight" value="{{ user_profile.weight }}"></div>
+            <div class="col-md-12 mb-3"><label class="labels">Height (CM)</label><input type="number" class="form-control" placeholder="172"name="height" id="height" value="{{ user_profile.height }}"></div>
+            <div class="col-md-12 mb-3"><label class="labels">Abdomen (CM)</label><input type="number" class="form-control" placeholder="172"name="abdomen" id="abdomen" value="{{ user_profile.abdomen }}">
+            
+            </div>
+        
+        {% comment %} <div class="col-md-12 mt-4 text-center"><button class="btn btn-primary profile-button" type="submit">Save Profile</button></div> {% endcomment %}
+
+        <label for="profile_picture">Profile Picture:</label>
+        <input type="file" name="profile_picture" id="profile_picture">
+
+        <div class="col-md-12 mt-4 text-center"><button class="btn btn-primary profile-button" type="submit">Save Profile</button></div>
+
+
+        {% comment %} <button type="submit">Update Profile</button> {% endcomment %}
+    </form>
+
+    {% endif %}
+{% endblock %}

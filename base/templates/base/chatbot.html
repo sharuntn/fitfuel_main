@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<div style="display: flex; flex-direction: column;">
+    <div style="width: 1500px; height: 550px;">
+        {% for item in data %}
+            <div style="margin: 10px; padding: 5px; background-color:azure">{{ item.prompt }}</div>
+            <div style="margin: 10px; padding: 5px;background-color:beige">{{ item.translation }}</div>
+        {% endfor %}
+    </div>
+</div>
+
+        <form action="" method="post">{% csrf_token %}
+            <div class="input-group mb-3" style="width: 1500px;margin-top:20px">
+                <input type="text" class="form-control" placeholder="Ask your question" aria-label="enter the prompt"
+                    aria-describedby="button-addon2" style="border: 4px;" name="prompt">
+                <input type="submit" class="btn btn-outline-secondary" type="button" id="button-addon2">
+            </div>
+        </form>
+{% endblock %}
