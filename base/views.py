@@ -12,6 +12,7 @@ from django.core.files.storage import FileSystemStorage
 from django.contrib.auth import login
 from .models import UserProfile
 from django.core.exceptions import ObjectDoesNotExist
+from django.contrib.auth import update_session_auth_hash
 # from .models import RegistrationForm
 # Create your views here.
 def loginPage(request):
@@ -62,7 +63,36 @@ def registerPage(request):
 
     else:
         return render(request,'base/register.html')
-    
+
+@login_required
+def custom_change_password(request):
+    if request.method == 'POST':
+        old_password = request.POST['old_password']
+        new_password1 = request.POST['new_password1']
+        new_password2 = request.POST['new_password2']
+
+        user = request.user
+
+        # Check if the old password is correct
+        if not user.check_password(old_password):
+            messages.error(request, 'Incorrect old password')
+            return redirect('change_password')
+
+        # Check if the new passwords match
+        if new_password1 != new_password2:
+            messages.error(request, 'New passwords do not match')
+            return redirect('change_password')
+
+        # Set the new password and update the session auth hash
+        user.set_password(new_password1)
+        user.save()
+        update_session_auth_hash(request, user)
+
+        messages.success(request, 'Password changed successfully')
+        return redirect('home')
+
+    return render(request, 'base/change_password.html')
+
 def scan(request):
     if request.method == 'POST':
         form = ImageForm(request.POST,request.FILES)
@@ -98,6 +128,7 @@ def update_user(request):
         user_profile.weight = request.POST.get('weight')
         user_profile.height = request.POST.get('height')
         user_profile.abdomen = request.POST.get('abdomen')
+        user_profile.diabetic = request.POST.get('diabetic', 'not_sure')
         user_profile.profile_picture = request.FILES.get('profile_picture')
 
         #BMI

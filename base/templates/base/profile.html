@@ -39,12 +39,20 @@
             <div class="col-md-12 mb-3"><label class="labels">Abdomen (CM)</label><input type="number" class="form-control" placeholder="172"name="abdomen" id="abdomen" value="{{ user_profile.abdomen }}">
             
             </div>
+            <div>
+            <label for="diabetic">Diabetic Status:</label>
+            <select name="diabetic" required>
+                <option value="diabetic" {% if request.user.userprofile.diabetic == 'diabetic' %}selected{% endif %}>Diabetic</option>
+                <option value="not_diabetic" {% if request.user.userprofile.diabetic == 'not_diabetic' %}selected{% endif %}>Not Diabetic</option>
+                <option value="not_sure" {% if request.user.userprofile.diabetic == 'not_sure' %}selected{% endif %}>Not Sure</option>
+            </select>
+                </div>
         
         {% comment %} <div class="col-md-12 mt-4 text-center"><button class="btn btn-primary profile-button" type="submit">Save Profile</button></div> {% endcomment %}
-
+<div>
         <label for="profile_picture">Profile Picture:</label>
         <input type="file" name="profile_picture" id="profile_picture">
-
+</div>
         <div class="col-md-12 mt-4 text-center"><button class="btn btn-primary profile-button" type="submit">Save Profile</button></div>
 
 
